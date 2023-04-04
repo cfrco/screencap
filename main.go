@@ -12,6 +12,14 @@ import (
 )
 
 func main() {
+	// Setup logging
+	logFile, err := os.Create("log.txt")
+	if err != nil {
+		log.Fatalf("err: fail to create log file: %s", err)
+	}
+	defer logFile.Close()
+	log.SetOutput(logFile)
+
 	var screenId int = 0
 	if len(os.Args) >= 2 {
 		id, _ := strconv.ParseInt(os.Args[1], 10, 32)
@@ -36,6 +44,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("err: fail to capture screen: %d", screenId)
 	}
+	log.Printf("info: capture screen: %d, size: %dx%d, file: %s", screenId, bounds.Dx(), bounds.Dy(), filePath)
 
 	file, err := os.Create(filePath)
 	if err != nil {
