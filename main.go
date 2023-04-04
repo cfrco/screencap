@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// Setup logging
-	logFile, err := os.Create("log.txt")
+	logFile, err := os.OpenFile("log.txt", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("err: fail to create log file: %s", err)
 	}
